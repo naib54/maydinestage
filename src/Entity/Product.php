@@ -44,6 +44,10 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?SubCategory $Product = null;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
@@ -164,6 +168,18 @@ class Product
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getProduct(): ?SubCategory
+    {
+        return $this->Product;
+    }
+
+    public function setProduct(?SubCategory $Product): static
+    {
+        $this->Product = $Product;
 
         return $this;
     }
