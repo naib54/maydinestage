@@ -3,8 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Product;
-use App\Entity\Category;
-use App\Entity\SubCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,6 +20,7 @@ class ProductRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Product::class);
     }
+
 
     public function findByCategoryAndSubcategory(?Category $category, ?SubCategory $subcategory): array
     {
@@ -45,6 +44,7 @@ class ProductRepository extends ServiceEntityRepository
         // Exécution de la requête et retour des résultats
         return $qb->getQuery()->getResult();
     }
+
 
 
     //    /**
@@ -71,4 +71,17 @@ class ProductRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    
+    
+    //  Création d'une requête pour récuperer les produits associés à une catég. spécifique
+    // public function findByCategory(string $categoryName): array
+    // {
+    //     return $this->createQueryBuilder('p') 
+    //     ->join('p.category', 'c')
+    //     ->andWhere('c.name = :category')
+    //     ->setParameter('category', $categoryName)
+    //     ->getQuery()
+    //     ->getResult();
+    // }
+    
 }

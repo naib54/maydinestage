@@ -1,0 +1,251 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil
+{% endblock %}
+
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+
+
+	<img class="bg-img" src={{ asset('/assets/uploads/bijoux/bijoux3.jpeg') }} alt="bg image">
+</img>
+
+
+<section class="py-4 hidden" id="accueil">
+	<h1 id="MonH1" class="mb-4">May dine France</h1>
+	<h1 id="arabic" class="mb-4">مَـــرحبــا
+	</h1>
+	<div id="divider">
+		<div class="display-4">
+
+			<a id="decouvrir" type="button" class="btn rounded-pill mt-1" href="{{ path('app_product')}}">
+				Découvrir nos produits
+			</a>
+
+		</div>
+	</div>
+</section>
+
+
+<section class="hidden" style="margin-top: 100vh;">
+	<div class="container">
+		<div class="row justify-content-center align-items-center">
+			<div class="col-md-12">
+				<div class="fade-in">
+					<h1>Qui sommes-nous ?</h1>
+					<p class="hidden">
+						May Dine France est une marque Marocaine créée en 2022 et déposée à l’OMPIC par Joffrine DEHAIS,entrepreneuse et artiste française. 																																																																																																																																																																																																																																																																																																																														Venue découvrir le Maroc en 2013, elle en tombera amoureuse par ses paysages et cultures variées.
+																																																																																																																																																																																																																																																																																																																																																																																																10 ans plus tard, l’idée lui est venue de promouvoir l’artisanat français au Maroc.
+					</p>
+
+
+					<p class="hidden">Notre but est de promouvoir l’artisanat français et la culture française au Maroc.
+																																																																																																																																																																																																																																																																																																																																																																																																																													Nous vous proposons des produits alimentaires, cosmétiques, des boissons, des bijoux artisanaux, des vêtements prêt-à-porter de qualité ! 
+																																																																																																																																																																																																																																																																																																																																																																																																																													Nous vous proposons des produits que nous réalisons, que nous faisons réaliser pour notre enseigne,
+																																																																																																																																																																																																																																																																																																																																																																																																																													 ou encore nous mettons en avant de jeunes entrepreneurs inspirants pour les aider dans leurs activités.</p>
+					<h6 class="hidden">Slogan : Venez vivre l’espace d’un instant à la française !</h6>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>
+
+<section class="hidden">
+
+
+	<div id="divider">
+		<h1 id="galerietitre" class="display-4">Galerie</h1>
+	</div>
+	<div class="container-fluid hidden">
+		<div
+			class="px-lg-5 hidden">
+			{# Galerie #}
+			<div class="row py-5" id="nosproduits">
+				<div class="col-lg-12 mx-auto">
+					<div class="text-white p-5 shadow-sm rounded banner">
+						<h1 class="display-4">Nos produits sont</h1>
+						<p class="lead">
+							<span id="bleu">Haut de gamme,</span>
+							<span class="blanc">Qualitatifs</span>,
+							<span id="rouge">et Français !</span>
+						</p>
+
+					</div>
+				</div>
+			</div>
+
+
+			<div
+				class="row hidden">
+				<!-- Gallery item -->
+				<div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Bijoux/bijoux18.jpeg')}}" alt="" class="img-fluid card-img-top">
+						<div class="p-4">
+							<h5>
+								<a href="#" class="text-dark">Collier 1</a>
+							</h5>
+							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+								<p class="small mb-0">
+									<i class="fa fa-picture-o mr-2"></i>
+									
+									<span class="font-weight-bold">35 €</span>
+								</p>
+								<button class="badge badge-primary px-3 rounded-pill  ">Acheter</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End -->
+
+				<!-- Gallery item -->
+				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
+					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Bijoux/bijoux3.jpeg')}}" alt="" class="img-fluid card-img-top">
+						<div class="p-4">
+							<h5>
+								<a href="#" class="text-dark">Blorange</a>
+							</h5>
+							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+								<p class="small mb-0">
+									<i class="fa fa-picture-o mr-2"></i>
+									<span class="font-weight-bold">PNG</span>
+								</p>
+								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">Acheter</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End -->
+
+				<!-- Gallery item -->
+				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
+					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Bijoux/bijoux8.jpeg')}}" alt="" class="img-fluid card-img-top">
+						<div class="p-4">
+							<h5>
+								<a href="#" class="text-dark">And She Realized</a>
+							</h5>
+							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+								<p class="small mb-0">
+									<i class="fa fa-picture-o mr-2"></i>
+									<span class="font-weight-bold">30 €</span>
+								</p>
+								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">Acheter</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End -->
+
+				<!-- Gallery item -->
+				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
+					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Bijoux/bijoux13.jpeg')}}" alt="" class="img-fluid card-img-top">
+						<div class="p-4">
+							<h5>
+								<a href="#" class="text-dark">DOSE Juice</a>
+							</h5>
+							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+								<p class="small mb-0">
+									<i class="fa fa-picture-o mr-2"></i>
+									<span class="font-weight-bold">40 €</span>
+								</p>
+								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">Acheter</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End -->
+
+				<!-- Gallery item -->
+				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
+					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Friandises/8.jpeg')}}" alt="" class="img-fluid card-img-top">
+						<div class="p-4">
+							<h5>
+								<a href="#" class="text-dark">Pineapple</a>
+							</h5>
+							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+								<p class="small mb-0">
+									<i class="fa fa-picture-o mr-2"></i>
+									<span class="font-weight-bold">PNG</span>
+								</p>
+								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">Acheter</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End -->
+
+				<!-- Gallery item -->
+				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
+					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Friandises/1.jpeg')}}" alt="" class="img-fluid card-img-top">
+						<div class="p-4">
+							<h5>
+								<a href="#" class="text-dark">Yellow banana</a>
+							</h5>
+							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+								<p class="small mb-0">
+									<i class="fa fa-picture-o mr-2"></i>
+									<span class="font-weight-bold">JPG</span>
+								</p>
+								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">Acheter</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End -->
+
+				<!-- Gallery item -->
+				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
+					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Friandises/4.jpeg')}}" alt="" class="img-fluid card-img-top">
+						<div class="p-4">
+							<h5>
+								<a href="#" class="text-dark">Teal Gameboy</a>
+							</h5>
+							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+								<p class="small mb-0">
+									<i class="fa fa-picture-o mr-2"></i>
+									<span class="font-weight-bold">JPEG</span>
+								</p>
+								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">Acheter</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- End -->
+
+				<!-- Gallery item -->
+				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
+					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Friandises/21.jpeg')}}" alt="" class="img-fluid card-img-top">
+						<div class="p-4">
+							<h5>
+								<a href="#" class="text-dark">Color in Guatemala.</a>
+							</h5>
+							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+								<p class="small mb-0">
+									<i class="fa fa-picture-o mr-2"></i>
+									<span class="font-weight-bold">PNG</span>
+								</p>
+								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">Acheter</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- End -->
+
+			</div>
+			<div class="py-5 text-right hidden">
+				<a href="{{ path('app_product')}}" class="btn btn-dark px-5 py-3 text-uppercase">En voir plus</a>
+			</div>
+		</div>
+	</div>
+</section>{% endblock %}
