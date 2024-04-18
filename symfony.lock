@@ -26,9 +26,6 @@
             "./migrations/.gitignore"
         ]
     },
-    "knplabs/knp-paginator-bundle": {
-        "version": "v6.3.0"
-    },
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {
