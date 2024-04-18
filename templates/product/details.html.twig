@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Produit{% endblock %}
+
+{% block body %}
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ products.image }}" alt="{{ products.name }}" width="500" height="600" /></div>
+                    <div class="col-md-6">
+                        {% if products.promotion != null %}
+                        <div class="small mb-1">-{{ products.discount| number_format(0, '.', '') }}%</div>
+                        {% endif %}
+                        <h1 class="display-5 fw-bolder">{{ products.name }}</h1>
+                        <div class="fs-5 mb-5">
+                            {% if products.promotion != null %}
+                                {% set reducedPrice = products.price * (1 - products.discount / 100) %}
+                                <span class="text-decoration-line-through">{{ products.price }}€</span>
+                                <span>{{ reducedPrice|number_format(2, '.', '') }}€</span>
+                            {% else %}
+                                <span>{{ products.price }}€</span>
+                            {% endif %}
+                        </div>
+                        <select name="size" id="size">
+                            {% for stock in stocks %}
+                                <option value="{{ stock.size }}">{{ stock.size }}</option>
+                            {% endfor %}
+                        </select>
+                        <p class="lead">{{ products.description }}</p>
+                        <div class="d-flex">
+                            <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                <i class="bi-cart-fill me-1"></i>
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}
