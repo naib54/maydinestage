@@ -5,7 +5,7 @@
 {% block body %}
 
 <main class="container-fluid">
-    <section id="productsPage" class="row">
+    <div id="productsPage" class="row">
         <aside id="productsFilter" class="col-md-2">
             {{ form_start(cat_subc_form, {'attr': {'class': 'form-group'}}) }}
                 {{ form_row(cat_subc_form.category, {'attr': {'class': 'form-control'}}) }}
@@ -45,7 +45,7 @@
                 {% endfor %}
             </div>
         </div>
-    </section>
+    </div>
 
     <div class="d-flex justify-content-end">
         {{ knp_pagination_render(products) }}
@@ -55,47 +55,53 @@
 
 {% block javascripts %}
 <script>
+let timeoutId;
+
 document.getElementById('product_filter_category').addEventListener('change', function() {
     const categoryId = this.value;
     const subcategorySelect = document.getElementById('product_filter_subcategory');
 
-    // Supprimer les anciennes options
-    while (subcategorySelect.firstChild) {
-        subcategorySelect.removeChild(subcategorySelect.firstChild);
-    }
+    // Annuler la requête précédente si elle existe
+    clearTimeout(timeoutId);
 
-    // Ajouter le placeholder
-    const placeholderOption = document.createElement('option');
-    placeholderOption.value = '';
-    placeholderOption.text = 'Toutes les sous-catégories';
-    subcategorySelect.appendChild(placeholderOption);
+    // Déclencher la requête après un délai de 300 ms
+    timeoutId = setTimeout(function() {
+        // Supprimer les anciennes options
+        subcategorySelect.innerHTML = '';
 
-    // Si aucune catégorie n'est sélectionnée, quitter la fonction
-    if (categoryId === '') {
-        return;
-    }
+        // Ajouter le placeholder
+        const placeholderOption = document.createElement('option');
+        placeholderOption.value = '';
+        placeholderOption.text = 'Toutes les sous-catégories';
+        subcategorySelect.appendChild(placeholderOption);
 
-    // Effectuer la requête AJAX pour charger les sous-catégories
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/product/load-subcategories?category_id=' + categoryId, true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            // Ajouter les sous-catégories à la liste déroulante
-            for (const subcategoryId in response.subcategories) {
-                const subcategoryOption = document.createElement('option');
-                subcategoryOption.value = subcategoryId;
-                subcategoryOption.text = response.subcategories[subcategoryId];
-                subcategorySelect.appendChild(subcategoryOption);
-            }
-        } else {
-            console.error('Error loading subcategories: ' + xhr.statusText);
+        // Si aucune catégorie n'est sélectionnée, quitter la fonction
+        if (categoryId === '') {
+            return;
         }
-    };
-    xhr.onerror = function() {
-        console.error('Error loading subcategories: ' + xhr.statusText);
-    };
-    xhr.send();
+
+        // Effectuer la requête AJAX pour charger les sous-catégories
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '/product/load-subcategories?category_id=' + categoryId, true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                // Ajouter les sous-catégories à la liste déroulante
+                for (const subcategoryId in response.subcategories) {
+                    const subcategoryOption = document.createElement('option');
+                    subcategoryOption.value = subcategoryId;
+                    subcategoryOption.text = response.subcategories[subcategoryId];
+                    subcategorySelect.appendChild(subcategoryOption);
+                }
+            } else {
+                console.error('Error loading subcategories: ' + xhr.statusText);
+            }
+        };
+        xhr.onerror = function() {
+            console.error('Error loading subcategories: ' + xhr.statusText);
+        };
+        xhr.send();
+    }, 300);
 });
 </script>
 {% endblock %}

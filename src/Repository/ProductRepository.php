@@ -23,7 +23,6 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-
     public function findByCategoryAndSubcategory(?Category $category, ?SubCategory $subcategory): array
     {
         // Création du constructeur de requête
