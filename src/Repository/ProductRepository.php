@@ -23,26 +23,19 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    public function findByCategoryAndSubcategory(?Category $category, ?SubCategory $subcategory): array
+    public function findByCategoryAndSubcategory(Category $category, ?SubCategory $subcategory): array
     {
-        // Création du constructeur de requête
-        $qb = $this->createQueryBuilder('p'); // 'p' représente l'alias pour l'entité Product
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.category', 'c')
+            ->where('c = :category')
+            ->setParameter('category', $category);
 
-        // Si une catégorie est fournie, on ajoute une jointure et une condition pour la catégorie
-        if ($category !== null) {
-            $qb->leftJoin('p.category', 'cat') // 'cat' représente l'alias pour l'entité Category
-                ->andWhere('cat = :category')
-                ->setParameter('category', $category);
-        }
-
-        // Si une sous-catégorie est fournie, on ajoute une jointure et une condition pour la sous-catégorie
         if ($subcategory !== null) {
-            $qb->leftJoin('p.subcategory', 'sub') 
-                ->andWhere('sub = :subcategory')
+            $qb->leftJoin('p.subcategory', 's')
+                ->andWhere('s = :subcategory')
                 ->setParameter('subcategory', $subcategory);
         }
 
-        // Exécution de la requête et retour des résultats
         return $qb->getQuery()->getResult();
     }
 

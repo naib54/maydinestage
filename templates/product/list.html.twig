@@ -1,8 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les Produits{% endblock %}
+{% block title %}Product{% endblock %}
 
 {% block body %}
+
+
+
+<h1>Bonjour</h1>
+
+<div>
+{{ form_start(form, {'attr': {'class': 'form-group'}}) }}
+{{ form_row(form.category, {'attr': {'class': 'form-control', 'id': 'category'}}) }}
+{{ form_row(form.subcategory, {'attr': {'class': 'form-control', 'id': 'subcategory'}}) }}
+{{ form_row(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+{{ form_end(form) }}
+</div>
+
+{% for product in products %}
+    <p>{{ product.name }};
+{% endfor %}
 
 <main class="container-fluid">
     <div id="productsPage" class="row">
@@ -105,5 +121,6 @@ document.getElementById('product_filter_category').addEventListener('change', fu
 });
 </script>
 {% endblock %}
+
 
 {% endblock %}
