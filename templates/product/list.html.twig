@@ -1,106 +1,118 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Les Produits{% endblock %}
+{% block title %}Nos Produits
+{% endblock %}
 
 {% block body %}
+	<main class="container-fluid">
+		{% for message in app.flashes ('OutOfTheStock') %}
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
 
-<main class="container-fluid">
+		{% for message in app.flashes ('EmptyCart') %}
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
 
-    <h1>Hello</h1>
+		<div id="productsPage" class="row">
+			<aside id="productsFilter" class="col-md-2">
+				{{ form_start(cat_subc_form, {'attr': {'class': 'form-group'}}) }}
+				{{ form_row(cat_subc_form.category, {'attr': {'class': 'form-control'}}) }}
+				{{ form_row(cat_subc_form.subcategory, {'attr': {'class': 'form-control'}}) }}
+				{{ form_row(cat_subc_form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+				{{ form_end(cat_subc_form) }}
+			</aside>
 
-    <section id="productsPage" class="row">
-        <aside id="productsFilter" class="col-md-2">
-            {{ form_start(cat_subc_form, {'attr': {'class': 'form-group'}}) }}
-                {{ form_row(cat_subc_form.category, {'attr': {'class': 'form-control'}}) }}
-                {{ form_row(cat_subc_form.subcategory, {'attr': {'class': 'form-control'}}) }}
-                {{ form_row(cat_subc_form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
-            {{ form_end(cat_subc_form) }}
-        </aside>
+			<div class="col-md-10">
+				<div class="row">
+					{% for product in products %}
+						<div class="col-lg-4 col-md-12 mb-4">
+							<div class="card">
+								<div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light">
+									<img src="{{ product.image }}" class="card-image w-100"/>
+								</div>
+								<div class="card-body">
+									<a href="" class="text-reset">
+										<h5 class="card-title mb-3">{{ product.name }}</h5>
+									</a>
+									<a href="" class="text-reset"></a>
+									{% if product.promotion != null %}
+										{% set reducedPrice = product.price * (1 - product.discount / 100) %}
+										<h6 class="mb-3">
+											<span style="text-decoration: line-through">{{ product.price }}€</span>
+											<span class="text-danger">{{ reducedPrice|number_format(2, '.', '') }}€</span>
+										</h6>
+									{% else %}
+										<h6 class="mb-3">{{ product.price }}€</h6>
+									{% endif %}
+									<a href="{{ path('app_product_details', {'id': product.id}) }}" class="btn btn-primary" target="_blank">Voir détails</a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
 
-        <div class="col-md-10">
-            <div class="row">
-                {% for product in products %}
-                <div class="col-lg-4 col-md-12 mb-4">
-                    <div class="card">
-                        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
-                            data-mdb-ripple-color="light">
-                            <img src="{{ product.image }}" class="card-image w-100" />
-                    </div>
-                        <div class="card-body">
-                            <a href="" class="text-reset">
-                            <h5 class="card-title mb-3">{{ product.name }}</h5>
-                            </a>
-                            <a href="" class="text-reset">
-                            </a>
-                            {% if product.promotion != null %}
-                                {% set reducedPrice = product.price * (1 - product.discount / 100) %}
-                                <h6 class="mb-3">
-                                    <span style="text-decoration: line-through">{{ product.price }}€</span>
-                                    <span class="text-danger">{{ reducedPrice|number_format(2, '.', '') }}€</span>
-                                </h6>
-                            {% else %}
-                                <h6 class="mb-3">{{ product.price }}€</h6>
-                            {% endif %}
-                            <a href="{{ path('app_product_details', {'id': product.id}) }}" class="btn btn-primary" target="_blank">Voir détails</a>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
+		<div class="d-flex justify-content-end">
+			{{ knp_pagination_render(products) }}
+		</div>
 
-    <div class="d-flex justify-content-end">
-        {{ knp_pagination_render(products) }}
-    </div>
+	</main>
 
-</main>
+	{% block javascripts %}
+		<script>
+			let timeoutId;
 
-{% block javascripts %}
-<script>
-document.getElementById('product_filter_category').addEventListener('change', function() {
-    const categoryId = this.value;
-    const subcategorySelect = document.getElementById('product_filter_subcategory');
+document.getElementById('product_filter_category').addEventListener('change', function () {
+const categoryId = this.value;
+const subcategorySelect = document.getElementById('product_filter_subcategory');
 
-    // Supprimer les anciennes options
-    while (subcategorySelect.firstChild) {
-        subcategorySelect.removeChild(subcategorySelect.firstChild);
-    }
+// Annuler la requête précédente si elle existe
+clearTimeout(timeoutId);
 
-    // Ajouter le placeholder
-    const placeholderOption = document.createElement('option');
-    placeholderOption.value = '';
-    placeholderOption.text = 'Toutes les sous-catégories';
-    subcategorySelect.appendChild(placeholderOption);
+// Déclencher la requête après un délai de 300 ms
+timeoutId = setTimeout(function () { // Supprimer les anciennes options
+subcategorySelect.innerHTML = '';
 
-    // Si aucune catégorie n'est sélectionnée, quitter la fonction
-    if (categoryId === '') {
-        return;
-    }
+// Ajouter le placeholder
+const placeholderOption = document.createElement('option');
+placeholderOption.value = '';
+placeholderOption.text = 'Toutes les sous-catégories';
+subcategorySelect.appendChild(placeholderOption);
 
-    // Effectuer la requête AJAX pour charger les sous-catégories
-    const xhr = new XMLHttpRequest();
-    xhr.open('GET', '/product/load-subcategories?category_id=' + categoryId, true);
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.responseText);
-            // Ajouter les sous-catégories à la liste déroulante
-            for (const subcategoryId in response.subcategories) {
-                const subcategoryOption = document.createElement('option');
-                subcategoryOption.value = subcategoryId;
-                subcategoryOption.text = response.subcategories[subcategoryId];
-                subcategorySelect.appendChild(subcategoryOption);
-            }
-        } else {
-            console.error('Error loading subcategories: ' + xhr.statusText);
-        }
-    };
-    xhr.onerror = function() {
-        console.error('Error loading subcategories: ' + xhr.statusText);
-    };
-    xhr.send();
+// Si aucune catégorie n'est sélectionnée, quitter la fonction
+if (categoryId === '') {
+return;
+}
+
+// Effectuer la requête AJAX pour charger les sous-catégories
+const xhr = new XMLHttpRequest();
+xhr.open('GET', '/product/load-subcategories?category_id=' + categoryId, true);
+xhr.onload = function () {
+if (xhr.status === 200) {
+const response = JSON.parse(xhr.responseText);
+// Ajouter les sous-catégories à la liste déroulante
+for (const subcategoryId in response.subcategories) {
+const subcategoryOption = document.createElement('option');
+subcategoryOption.value = subcategoryId;
+subcategoryOption.text = response.subcategories[subcategoryId];
+subcategorySelect.appendChild(subcategoryOption);
+}
+} else {
+console.error('Error loading subcategories: ' + xhr.statusText);
+}
+};
+xhr.onerror = function () {
+console.error('Error loading subcategories: ' + xhr.statusText);
+};
+xhr.send();
+}, 300);
 });
-</script>
-{% endblock %}
+		</script>
+	{% endblock %}
 
 {% endblock %}

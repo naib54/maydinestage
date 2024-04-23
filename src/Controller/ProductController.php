@@ -2,15 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Product;
-
-
 use App\Entity\Stock;
 use App\Form\ProductFilterType;
 use App\Repository\CategoryRepository;
 use App\Repository\SubCategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -93,8 +93,6 @@ class ProductController extends AbstractController
         return $this->render('product/details.html.twig', [
             'products' => $products,
             'stocks' => $stocks
-
         ]);
     }
 }
-
