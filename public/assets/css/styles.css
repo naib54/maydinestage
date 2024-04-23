@@ -1,0 +1,279 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 50vh;
+  height: 5;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+}
+
+#accueil {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+section {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  min-height: 100vh;
+}
+
+#galerietitre {
+  font-family: "Apple Chancery", cursive;
+}
+
+.banner {
+  /* background: #a770ef;
+    background: -webkit-linear-gradient(to right, #a770ef, #cf8bf3, #fdb99b);
+    background: linear-gradient(to right, #a770ef, #cf8bf3, #fdb99b); */
+
+  background-image: url("https://wallpaperbat.com/img/233762-free-download-morocco-computer-wallpaper-desktop-background.jpg");
+  background-position: 10px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.hidden {
+  opacity: 0;
+
+  transition: all 2s;
+}
+
+div#divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    height: 0.09em;
+    min-width: 30vw;
+  }
+
+  &::before {
+    background: linear-gradient(
+      to right,
+      rgba(240, 240, 240, 0),
+      hsl(247, 81%, 15%)
+    );
+    /* background: linear-gradient(to left, hwb(231 7% 26%), hsl(0, 0%, 100%), hsl(0, 88%, 37%)); */
+    margin-right: 4vh;
+  }
+
+  &::after {
+    background: linear-gradient(
+      to left,
+      rgba(240, 240, 240, 0),
+      hsl(247, 81%, 15%)
+    );
+    /* background: linear-gradient(to left, hwb(231 7% 26%), hsl(0, 0%, 100%), hsl(0, 88%, 37%)); */
+    margin-left: 4vh;
+  }
+}
+
+.badge {
+  color: #0a0c38;
+}
+
+.badge:hover {
+  background-color: #0e126c;
+  color: #f5f5f5;
+  transition: all ease 1s;
+}
+
+#nosproduits {
+  font-family: "Apple Chancery", cursive;
+}
+
+.show {
+  opacity: 1;
+
+  color: #0a0c38;
+}
+
+#bleu {
+  color: #0a0c38;
+}
+
+#rouge {
+  color: #830a0a;
+}
+
+.navbar {
+  height: 120px;
+}
+
+.navbar .nav-link.active {
+  color: #ffffff;
+}
+
+.navbar .nav-link.active:hover {
+  background-color: #fff;
+  color: #830a0a;
+}
+
+.navbar-brand {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.bg-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+a {
+  font-family: "Apple Chancery", cursive;
+  color: #ffffff;
+}
+
+#decouvrir {
+  font-family: "Apple Chancery", cursive;
+  background-color: rgb(46, 92, 230);
+  color: #f5f5f5;
+}
+
+#decouvrir:hover {
+  background-color: rgb(32, 59, 141);
+}
+
+#decouvrir .example-wrapper {
+  margin: 1em auto;
+  max-width: 800px;
+  width: 95%;
+  font: 18px / 1.5 sans-serif;
+}
+
+.example-wrapper code {
+  background: #f5f5f5;
+  padding: 2px 6px;
+}
+
+h1#mentions {
+  text-align: center;
+  color: #fff;
+  font-family: "Apple Chancery", cursive;
+}
+
+h1#MonH1 {
+  text-align: center;
+  font-family: "Apple Chancery", cursive;
+  color: #ffffff;
+}
+
+h1#arabic {
+  font-family: "KufiStandardGK", cursive;
+  color: #ffffff;
+  text-align: center;
+}
+
+h2#decouvrir {
+  text-align: center;
+  font-family: "Apple Chancery", cursive;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+footer {
+  font-family: "Apple Chancery", cursive;
+  color: rgb(255, 255, 255);
+  background-color: rgba(7, 9, 24, 0.5);
+  padding: 10px 0;
+  /* Ajoutez une hauteur maximale au footer */
+  max-height: 500px;
+  /* Ajustez selon vos besoins */
+  overflow: auto;
+  /* Ajoutez une barre de défilement si nécessaire */
+}
+
+.single-box h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.single-box .card-area i {
+  color: #ffffff;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.single-box a {
+  text-decoration: none;
+}
+
+.single-box h2 {
+  color: #fff;
+  font-size: 29px;
+  font-weight: 400;
+}
+
+.socials i {
+  font-size: 35px;
+  margin-right: 20px;
+
+  margin-top: 11px;
+}
+
+.card-image {
+  width: 100%;
+  height: 20vh;
+  object-fit: cover;
+}
+
+.card-title {
+  min-height: 2.5em;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body {
+  flex-grow: 1;
+}
+
+@media (max-width: 767px) {
+  .single-box {
+    margin-bottom: 50px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .single-box {
+    margin-bottom: 50px;
+  }
+}

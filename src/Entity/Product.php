@@ -172,7 +172,6 @@ class Product
         return $this;
     }
 
-
     public function getSubcategory(): ?SubCategory
     {
         return $this->subcategory;
@@ -184,17 +183,4 @@ class Product
 
         return $this;
     }
-
-
-    // public function getProduct(): ?SubCategory
-    // {
-    //     return $this->Product;
-    // }
-
-    // public function setProduct(?SubCategory $Product): static
-    // {
-    //     $this->Product = $Product;
-
-    //     return $this;
-    // }
 }

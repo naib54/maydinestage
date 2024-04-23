@@ -40,6 +40,7 @@ class ProductRepository extends ServiceEntityRepository
     }
 
 
+
     //    /**
     //     * @return Product[] Returns an array of Product objects
     //     */
@@ -64,4 +65,17 @@ class ProductRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+    
+    
+    //  Création d'une requête pour récuperer les produits associés à une catég. spécifique
+    // public function findByCategory(string $categoryName): array
+    // {
+    //     return $this->createQueryBuilder('p') 
+    //     ->join('p.category', 'c')
+    //     ->andWhere('c.name = :category')
+    //     ->setParameter('category', $categoryName)
+    //     ->getQuery()
+    //     ->getResult();
+    // }
+    
 }
