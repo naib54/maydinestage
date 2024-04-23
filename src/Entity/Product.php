@@ -48,9 +48,16 @@ class Product
     #[ORM\JoinColumn(nullable: false)]
     private ?SubCategory $subcategory = null;
 
+    /**
+     * @var Collection<int, OrderDetail>
+     */
+    #[ORM\OneToMany(targetEntity: OrderDetail::class, mappedBy: 'products')]
+    private Collection $orderDetails;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
+        $this->orderDetails = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,6 +187,36 @@ class Product
     public function setSubcategory(?SubCategory $subcategory): static
     {
         $this->subcategory = $subcategory;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderDetail>
+     */
+    public function getOrderDetails(): Collection
+    {
+        return $this->orderDetails;
+    }
+
+    public function addOrderDetail(OrderDetail $orderDetail): static
+    {
+        if (!$this->orderDetails->contains($orderDetail)) {
+            $this->orderDetails->add($orderDetail);
+            $orderDetail->setProducts($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDetail(OrderDetail $orderDetail): static
+    {
+        if ($this->orderDetails->removeElement($orderDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDetail->getProducts() === $this) {
+                $orderDetail->setProducts(null);
+            }
+        }
 
         return $this;
     }
