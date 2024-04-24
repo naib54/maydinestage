@@ -51,7 +51,7 @@ class ProductController extends AbstractController
         return $this->render('product/list.html.twig', [
             'categories' => $categories,
             'products' => $products,
-            'form' => $form->createView(),
+            'cat_subc_form' => $form->createView(),
         ]);
     }
 }
