@@ -27,6 +27,8 @@ class ProductController extends AbstractController
         // Récupérer tous les produits sans pagination
         $productsQuery = $entityManager->getRepository(Product::class)->findAll();
 
+        
+
         // Paginer les résultats de la requête des produits
         $paginator = $paginatorInterface->paginate(
             $productsQuery, // Requête de tous les produits
