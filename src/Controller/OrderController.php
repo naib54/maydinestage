@@ -17,6 +17,7 @@ class OrderController extends AbstractController
     #[Route('/add', name: 'add')]
     public function add(SessionInterface $session, ProductRepository $productRepository, EntityManagerInterface $entityManagerInterface): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         $cart = $session->get('cart', []);
         
         if($cart === []) {
@@ -28,7 +29,7 @@ class OrderController extends AbstractController
         $order = new Order();
 
         // On remplit la commande
-        // $order->setUser($this->getUser());
+        $order->setUser($this->getUser());
         $order->setReference(uniqid());
 
         // on parcourt le panier pour créer les details de commande
@@ -51,8 +52,6 @@ class OrderController extends AbstractController
         $entityManagerInterface->persist($order);
         $entityManagerInterface->flush();
 
-        return $this->render('order/index.html.twig', [
-            'controller_name' => 'OrderController',
-        ]);
+        return $this->redirectToRoute('app_mollie');
     }
 }
