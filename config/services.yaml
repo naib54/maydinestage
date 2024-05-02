@@ -5,6 +5,9 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 
 parameters:
+App\EventListener\SessionExpirationListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.request }
     locale: 'fr'
     app.locales: 'en|fr|ar'
 
