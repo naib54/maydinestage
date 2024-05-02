@@ -5,8 +5,6 @@
 {% endblock %}
 
 {% block body %}
-
-
 	<div class="py-5">
 		<div class="container px-4 px-lg-5 my-5">
 			<div class="row gx-4 gx-lg-5 align-items-center">
@@ -44,7 +42,7 @@
 					</p>
 					<p class="lead">{{ product.description }}</p>
 					<div class="d-flex flex-column">
-						<form action="{{ path('app_cart_add', {'id': products.id}) }}" method="post">
+						<form action="{{ path('app_cart_add', {'id': product.id}) }}" method="post">
 							<div class="d-flex align-items-center">
 								<select class="form-select flex-grow-1 me-2" name="size" id="size">
 									{% for stock in stocks %}
@@ -109,7 +107,7 @@ this.value = maxQuantity; // Remettre la quantité maximale autorisée
 });
 });
 	</script>
-<script>
+	<script>
 		document.addEventListener('DOMContentLoaded', function () {
 const select = document.getElementById('size');
 if (select.options.length === 1 && select.options[0].value === '') {

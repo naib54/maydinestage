@@ -10,7 +10,7 @@
 				<div class="col-md-8">
 					<div class="card mb-4">
 						<div class="card-header py-3">
-							<h5 class="mb-0">{{ 'votre panier' |trans }}</h5>
+							<h5 class="mb-0">Votre panier</h5>
 						</div>
 						<div
 							class="card-body">
@@ -21,8 +21,9 @@
 										class="col-lg-3 col-md-12 mb-4 mb-lg-0">
 										<!-- Image -->
 										<div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
+
 											<a href="{{ path('app_product_details', {'id': element.product.id}) }}">
-												<img src="{{ element.product.image }}" class="w-100" alt="{{ element.product.name }}"/>
+												<img src="{{ element.product.image }}" class="w-100" alt="Blue Jeans Jacket"/>
 												<div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
 											</a>
 										</div>
@@ -37,134 +38,136 @@
 												<strong>{{ element.product.name }}</strong>
 											</a>
 										</p>
-										<p>{{ 'prix unitaire' |trans }}</p>
-										{{ element.product.price }}€</p>
-									<p>{{ 'taille' |trans }}
-									</p>
-									<a href="{{ path('app_cart_delete', {id: element.product.id}) }}" type="button" class="btn btn-danger btn-sm me-1 mb-2">
-										<i class="fas fa-trash"></i>
-									</a>
-									<!-- Data -->
-								</div>
-
-								<div
-									class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-									<!-- Quantity -->
-									<div class="d-flex justify-content-center align-items-center mb-4" style="max-width: 300px">
-										<a href="{{ path('app_cart_remove', {id: element.product.id}) }}" class="btn btn-primary px-3 me-2">
-											<i class="fas fa-minus"></i>
+										<p>Prix unitaire:
+											{{ element.product.price }}€</p>
+										{# <p>Couleur:
+																																																												</p> #}
+										<p>Taille :
+											{{ element.size }}
+										</p>
+										<a href="{{ path('app_cart_delete', {id: element.product.id}) }}" type="button" class="btn btn-danger btn-sm me-1 mb-2">
+											<i class="fas fa-trash"></i>
 										</a>
+										<!-- Data -->
+									</div>
 
-										<div class="w-25">
-											<p class="text-center align-items-center m-0">
-												<strong>{{ element.quantity }}</strong>
-											</p>
-										</div>
+									<div
+										class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+										<!-- Quantity -->
+										<div class="d-flex justify-content-center align-items-center mb-4" style="max-width: 300px">
+											<a href="{{ path('app_cart_remove', {id: element.product.id}) }}" class="btn btn-primary px-3 me-2">
+												<i class="fas fa-minus"></i>
+											</a>
 
-										<a href="{{ path('app_cart_add_quantity', {'id': element.product.id, 'size': element.size}) }}" class="btn btn-primary px-3 ms-2">
+											<div class="w-25">
+												<p class="text-center align-items-center m-0">
+													<strong>{{ element.quantity }}</strong>
+												</p>
+											</div>
+
+											<a href="{{ path('app_cart_add_quantity', {'id': element.product.id, 'size': element.size}) }}" class="btn btn-primary px-3 ms-2">
 												<i class="fas fa-plus"></i>
 											</a>
+										</div>
+										<!-- Quantity -->
+
+										<!-- Price -->
+										<p class="text-center">
+											<strong>Total:
+												{{ element.quantity * element.product.price }}€</strong>
+										</p>
+										<!-- Price -->
 									</div>
-									<!-- Quantity -->
-
-									<!-- Price -->
-									<p class="text-center">
-										<strong>{{ 'total' |trans }}
-											{{ element.quantity * element.product.price }}€</strong>
-									</p>
-									<!-- Price -->
 								</div>
-							</div>
 
-							<!-- Item -->
+								<!-- Item -->
 
-							<hr class="my-4"/>
-						{% endfor %}
-						<div
+								<hr class="my-4"/>
+							{% endfor %}
 							<div class="text-start align-items-center" style="max-width: 300px">
-								<a href="{{ path('app_cart_empty') }}" class="btn btn-danger">{{ 'vider le panier' |trans }}</a>
+								<a href="{{ path('app_cart_empty') }}" class="btn btn-danger">Vider le panier</a>
+								{# <button class="btn btn-danger" id="empty-cart">Vider le panier</button> #}
 							</div>
 						</div>
 					</div>
+
+					<!-- Delivery Date -->
+					<div class="card mb-4">
+						<div class="card-body">
+							<p>
+								<strong>La livraison de votre commande est estimée pour :</strong>
+							</p>
+							<p id="delivery-date" class="mb-0"></p>
+						</div>
+					</div>
+					<!-- Delivery Date -->
+
+					<!-- Payment Method -->
+					<div class="card mb-4 mb-lg-0">
+						<div class="card-body">
+							<p>
+								<strong>Nous acceptons</strong>
+							</p>
+							<img class="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg" alt="Visa"/>
+							<img class="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg" alt="American Express"/>
+							<img class="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg" alt="Mastercard"/>
+						</div>
+					</div>
+					<!-- Payment method -->
 				</div>
 
-				<!-- Delivery Date -->
-				<div class="card mb-4">
-					<div class="card-body">
-						<p>
-							<strong>{{ 'la livraison est estimée pour' |trans }}</strong>
-						</p>
-						<p id="delivery-date" class="mb-0"></p>
-					</div>
-				</div>
-				<!-- Delivery Date -->
 
-				<!-- Payment Method -->
-				<div class="card mb-4 mb-lg-0">
-					<div class="card-body">
-						<p>
-							<strong>{{ 'nous acceptons' |trans }}</strong>
-						</p>
-						<img class="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg" alt="Visa"/>
-						<img class="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg" alt="American Express"/>
-						<img class="me-2" width="45px" src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg" alt="Mastercard"/>
-					</div>
-				</div>
-				<!-- Payment method -->
-			</div>
+				<div class="col-md-4">
+					<div class="card mb-4">
+						<div class="card-header py-3">
+							<h5 class="mb-0">Résumé de votre panier</h5>
+						</div>
+						<div class="card-body">
+							<ul class="list-group list-group-flush">
+								{% for element in data %}
+									<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+										{% if element.quantity > 1 %}
+											{{ element.product.name }}
+											x{{ element.quantity }}
+										{% else %}
+											{{ element.product.name }}
+										{% endif %}
+										<span>{{ element.quantity * element.product.price }}€</span>
+									</li>
+								{% endfor %}
 
-
-			<div class="col-md-4">
-				<div class="card mb-4">
-					<div class="card-header py-3">
-						<h5 class="mb-0">{{ 'résumé de notre panier' |trans }}</h5>
-					</div>
-					<div class="card-body">
-						<ul class="list-group list-group-flush">
-							{% for element in data %}
-								<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-									{% if element.quantity > 1 %}
-										{{ element.product.name }}
-										x{{ element.quantity }}
-									{% else %}
-										{{ element.product.name }}
-									{% endif %}
-									<span>{{ element.quantity * element.product.price }}€</span>
+								<!-- Frais de port -->
+								<li class="list-group-item d-flex justify-content-between align-items-center px-0">
+									Shipping
+									<span>Gratis</span>
 								</li>
-							{% endfor %}
+								<!-- Frais de port -->
 
-							<!-- Frais de port -->
-							<li class="list-group-item d-flex justify-content-between align-items-center px-0">
-								Shipping
-								<span>Gratis</span>
-							</li>
-							<!-- Frais de port -->
+								<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+									<div>
+										<strong>Prix total</strong>
+										<strong>
+											<p class="mb-0">(TVA incluse)</p>
+										</strong>
+									</div>
+									<span>
+										<strong>{{ total }}€</strong>
+									</span>
+								</li>
+							</ul>
 
-							<li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-								<div>
-									<strong>{{ 'prix total' |trans }}</strong>
-									<strong>
-										<p class="mb-0">(TVA incluse)</p>
-									</strong>
-								</div>
-								<span>
-									<strong>{{ total }}€</strong>
-								</span>
-							</li>
-						</ul>
+							<a href="{{ path('app_order_add') }}" class="btn btn-primary btn-lg btn-block">
+								Procéder au paiement
+							</a>
 
-						<a href="{{ path('app_order_add') }}" class="btn btn-primary btn-lg btn-block">
-							{{ 'procéder au paiement' |trans }}
-						</a>
-
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<script>
-	// Obtenir la date actuelle
+	<script>
+		// Obtenir la date actuelle
 const currentDate = new Date();
 
 // Ajouter une semaine (7 jours)
@@ -189,4 +192,5 @@ const deliveryDate = day + '.' + month + '.' + year;
 
 // Afficher la date estimée de livraison
 document.getElementById("delivery-date").textContent = deliveryDate;
-</script>{% endblock %}
+	</script>
+{% endblock %}
