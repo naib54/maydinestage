@@ -144,6 +144,10 @@ div#divider {
     align-items: center;
 }
 
+#product_title_list:hover {
+  color: #830a0a;
+}
+
 .d-flex {
     display: flex;
 }
