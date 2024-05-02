@@ -24,6 +24,9 @@ class OrderDetail
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $products = null;
 
+    #[ORM\ManyToOne(inversedBy: 'orderDetails')]
+    private ?Stock $stock = null;
+
     public function getQuantity(): ?int
     {
         return $this->quantity;
@@ -68,6 +71,18 @@ class OrderDetail
     public function setProducts(?Product $products): static
     {
         $this->products = $products;
+
+        return $this;
+    }
+
+    public function getStock(): ?Stock
+    {
+        return $this->stock;
+    }
+
+    public function setStock(?Stock $stock): static
+    {
+        $this->stock = $stock;
 
         return $this;
     }
