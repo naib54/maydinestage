@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\OrderDetail;
+use App\Repository\OrderRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,14 +20,30 @@ use App\Controller\CartController;
 class MollieController extends AbstractController
 {
     #[Route('/mollie', name: 'app_mollie')]
-    public function index(CartController $cartController, ProductRepository $productRepository, SessionInterface $session): Response
+    public function index(CartController $cartController, ProductRepository $productRepository, OrderRepository $orderRepository, SessionInterface $session): Response
     {
         // Calcul du total du panier
         $total = $cartController->getCartTotal($session, $productRepository);
-        
+        // dd($total);
+        // Vérifiez si le panier est vide
+        if ($total <= 0) {
+            $this->addFlash('EmptyCart', 'Votre panier est vide');
+            return $this->redirectToRoute('app_product');
+        }
+
         // Initialisation de Mollie avec votre clé d'API
         $mollie = new MollieApiClient();
         $mollie->setApiKey($_ENV["MOLLIE_API_KEY"]);
+
+        // Récupérer l'utilisateur actuel
+        $user = $this->getUser();
+
+        // Récupérer la dernière commande de l'utilisateur
+        $lastOrder = $orderRepository->findLastOrderByUser($user);
+
+        // Construction de la description du paiement
+        $description = "Commande n°" . $lastOrder->getId() . " - " . $lastOrder->getReference();
+
 
         // Création du paiement avec Mollie
         $payment = $mollie->payments->create([
@@ -34,7 +51,7 @@ class MollieController extends AbstractController
                 "currency" => "EUR",
                 "value" => number_format($total, 2, '.', ''), // Le montant doit être en format décimal avec deux décimales
             ],
-            "description" => "Achat sur votre site",
+            "description" => $description,
             "redirectUrl" => $this->generateUrl('app_mollie_confirm', [], UrlGeneratorInterface::ABSOLUTE_URL),
             "cancelUrl" => $this->generateUrl('app_mollie_cancel', [], UrlGeneratorInterface::ABSOLUTE_URL),
             // Ajoutez d'autres paramètres Mollie selon vos besoins
@@ -65,12 +82,41 @@ class MollieController extends AbstractController
         return $this->redirectToRoute('app_home');
     }
 
+    // #[Route('/mollie/cancel', name: 'app_mollie_cancel')]
+    // public function mollieCancel(Request $request, SessionInterface $session)
+    // {
+    //     $this->addFlash(
+    //         'alert',
+    //         'Paiement refusé! Blablabla.'
+    //     );
+
+    //     return $this->redirectToRoute('app_home');
+    // }
+
     #[Route('/mollie/cancel', name: 'app_mollie_cancel')]
-    public function mollieCancel(Request $request, SessionInterface $session)
+    public function mollieCancel(Request $request, SessionInterface $session, EntityManagerInterface $entityManager, OrderRepository $orderRepository)
     {
+        // Récupérer l'utilisateur actuel
+        $user = $this->getUser();
+
+        // Récupérer la dernière commande de l'utilisateur
+        $lastOrder = $orderRepository->findLastOrderByUser($user);
+
+        // Vérifier si une dernière commande existe
+        if ($lastOrder !== null) {
+            // Supprimer les détails de commande associés à cette commande
+            foreach ($lastOrder->getOrderDetails() as $orderDetail) {
+                $entityManager->remove($orderDetail);
+            }
+
+            // Supprimer la commande elle-même
+            $entityManager->remove($lastOrder);
+            $entityManager->flush();
+        }
+
         $this->addFlash(
             'alert',
-            'Paiement refusé! Blablabla.'
+            'Le paiement a été annulé. Votre commande n\'a pas été validée.'
         );
 
         return $this->redirectToRoute('app_home');
