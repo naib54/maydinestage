@@ -21,8 +21,8 @@
 		<div id="productsPage" class="row">
 			<aside id="productsFilter" class="col-md-2">
 				{{ form_start(cat_subc_form, {'attr': {'class': 'form-group'}}) }}
-				{{ form_row(cat_subc_form.category, {'attr': {'class': 'form-control'}}) }}
-				{{ form_row(cat_subc_form.subcategory, {'attr': {'class': 'form-control'}}) }}
+				{{ form_row(cat_subc_form.category, {'attr': {'class': 'form-control mb-3'}}) }}
+				{{ form_row(cat_subc_form.subcategory, {'attr': {'class': 'form-control mb-3'}}) }}
 				{{ form_row(cat_subc_form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
 				{{ form_end(cat_subc_form) }}
 			</aside>
@@ -36,18 +36,17 @@
 									<img src="{{ product.image }}" class="card-image w-100"/>
 								</div>
 								<div class="card-body">
-									<a href="" class="text-reset">
-										<h5 class="card-title mb-3">{{ product.name }}</h5>
+									<a href="{{ path('app_product_details', {'id': product.id}) }}" class="text-reset text-decoration-none">
+										<h5 id="product_title_list" class="card-title mb-3">{{ product.name }}</h5>
 									</a>
-									<a href="" class="text-reset"></a>
 									{% if product.promotion != null %}
 										{% set reducedPrice = product.price * (1 - product.discount / 100) %}
-										<h6 class="mb-3">
+										<h4 class="mb-3">
 											<span style="text-decoration: line-through">{{ product.price }}€</span>
 											<span class="text-danger">{{ reducedPrice|number_format(2, '.', '') }}€</span>
-										</h6>
+										</h4>
 									{% else %}
-										<h6 class="mb-3">{{ product.price }}€</h6>
+										<h4 class="mb-3">{{ product.price }}€</h4>
 									{% endif %}
 									<a href="{{ path('app_product_details', {'id': product.id}) }}" class="btn btn-primary">{{'voir détails' |trans }}</a>
 								</div>
