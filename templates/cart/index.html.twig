@@ -4,60 +4,7 @@
 {% endblock %}
 
 {% block body %}
-	<main class="container">
-		<div class="row">
-			<div class="col-12">
-				<h1>{{ 'panier' |trans }}</h1>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>{{ 'Photo' |trans }}</th>
-							<th>{{ 'nom' |trans }}</th>
-							<th>{{ 'prix' |trans }}</th>
-							<th>{{ 'quantité' |trans }}</th>
-							<th>{{ 'total' |trans }}</th>
-							<th>{{ 'action' |trans }}</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for element in data %}
-							<tr>
-								<td><img style="max-width: 50px;" src="{{ asset(element.product.image) }}"></td>
-								<td>{{ element.product.name }}</td>
-								<td>{{ element.product.price }}</td>
-								<td>{{ element.quantity }}</td>
-								<td>{{ element.quantity * element.product.price }}€</td>
-								<td>
-									<a href="{{ path('app_cart_add', {id: element.product.id}) }}" class="btn btn-success">+</a>
-									<a href="{{ path('app_cart_remove', {id: element.product.id}) }}" class="btn btn-warning">-</a>
-									<a href="{{ path('app_cart_delete', {id: element.product.id}) }}" class="btn btn-danger">{{ 'supprimer' |trans }}</a>
-								</td>
-							</tr>
-						{% else %}
-							<tr>
-								<td colspan="5">{{ 'votre panier est vide' |trans }}</td>
-							</tr>
-						{% endfor %}
-					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="3">{{ 'total' |trans }}</td>
-							<td>
-								{{ total }}€
-							</td>
-							<td>
-								<a href="{{ path('app_cart_empty') }}" class="btn btn-danger">{{ 'vider le panier' |trans }}</a>
-							</td>
-						</tr>
-					</tfoot>
-				</table>
-				{# <a href="{{ path('app_orders_add') }}" class="btn btn-primary">Validate the cart</a> #}
-			</div>
-		</div>
-	</main>
-
-
-	<section class="h-100 gradient-custom">
+	<div class="h-100 gradient-custom">
 		<div class="container py-5">
 			<div class="row d-flex justify-content-center my-4">
 				<div class="col-md-8">
@@ -74,8 +21,8 @@
 										class="col-lg-3 col-md-12 mb-4 mb-lg-0">
 										<!-- Image -->
 										<div class="bg-image hover-overlay hover-zoom ripple rounded" data-mdb-ripple-color="light">
-											<img src="{{ asset(element.product.image) }}" class="w-100" alt="Blue Jeans Jacket"/>
-											<a href="#!">
+											<a href="{{ path('app_product_details', {'id': element.product.id}) }}">
+												<img src="{{ element.product.image }}" class="w-100" alt="{{ element.product.name }}"/>
 												<div class="mask" style="background-color: rgba(251, 251, 251, 0.2)"></div>
 											</a>
 										</div>
@@ -86,12 +33,12 @@
 										class="col-lg-5 col-md-6 mb-4 mb-lg-0">
 										<!-- Data -->
 										<p>
-											<strong>{{ element.product.name }}</strong>
+											<a class="text-primary text-decoration-none" href="{{ path('app_product_details', {'id': element.product.id}) }}">
+												<strong>{{ element.product.name }}</strong>
+											</a>
 										</p>
 										<p>{{ 'prix unitaire' |trans }}</p>
 										{{ element.product.price }}€</p>
-									<p>{{ 'couleur' |trans }}
-									</p>
 									<p>{{ 'taille' |trans }}
 									</p>
 									<a href="{{ path('app_cart_delete', {id: element.product.id}) }}" type="button" class="btn btn-danger btn-sm me-1 mb-2">
@@ -114,9 +61,9 @@
 											</p>
 										</div>
 
-										<a href="{{ path('app_cart_add', {id: element.product.id}) }}" class="btn btn-primary px-3 ms-2">
-											<i class="fas fa-plus"></i>
-										</a>
+										<a href="{{ path('app_cart_add_quantity', {'id': element.product.id, 'size': element.size}) }}" class="btn btn-primary px-3 ms-2">
+												<i class="fas fa-plus"></i>
+											</a>
 									</div>
 									<!-- Quantity -->
 
@@ -134,9 +81,9 @@
 							<hr class="my-4"/>
 						{% endfor %}
 						<div
-							class="text-start align-items-center" style="max-width: 300px">
-							{# <a href="{{ path('app_cart_empty') }}" class="btn btn-danger">Vider le panier</a> #}
-							<button class="btn btn-danger" id="empty-cart">{{ 'vider le panier' |trans }}</button>
+							<div class="text-start align-items-center" style="max-width: 300px">
+								<a href="{{ path('app_cart_empty') }}" class="btn btn-danger">{{ 'vider le panier' |trans }}</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -215,7 +162,7 @@
 			</div>
 		</div>
 	</div>
-</section>
+</div>
 <script>
 	// Obtenir la date actuelle
 const currentDate = new Date();
