@@ -17,6 +17,22 @@
 					{% if product.promotion %}
 						<div class="badge bg-danger mb-3">-{{ product.discount| number_format(0, '.', '') }}%</div>
 					{% endif %}
+
+					{% set totalQuantity = 0 %}
+					{% for stock in stocks %}
+						{% if stock.quantity <= 5 and stock.quantity >= 1 %}
+							{% set totalQuantity = totalQuantity + stock.quantity %}
+						{% endif %}
+					{% endfor %}
+
+					{% if totalQuantity > 0 %}
+						<h2 class="text-danger">
+							<em>Plus que
+								{{ totalQuantity }}
+								en stock !</em>
+						</h2>
+					{% endif %}
+
 					<h1 class="display-5 fw-bolder">{{ product.name }}</h1>
 					<p class="lead">
 						{% if product.promotion %}
@@ -26,34 +42,22 @@
 							<span>{{ product.price }}€</span>
 						{% endif %}
 					</p>
-					<div class="mb-3">
-						<label for="size" class="form-label">{{'choisissez la taille' |trans }}</label>
-						<select class="form-select" id="size">
-							{% for stock in stocks %}
-								<option value="{{ stock.size }}">{{ stock.size }}</option>
-							{% endfor %}
-						</select>
-						<div class="mb-3">
-							<label for="color" class="form-label">{{'choisissez la couleur' |trans }}</label>
-							<select class="form-select" id="color">
-								{% for color in product.color %}
-									<option value="{{ color.id }}">{{ color.name }}</option>
-								{% endfor %}
-							</select>
-						</div>
-					</div>
-					<div class="mb-3">
-						<label for="quantity" class="form-label">{{'quantité' |trans }}</label>
-						<input class="form-control quantity-input" id="inputQuantity" type="number" value="1" min="1" style="max-width: 3rem" data-product-id="{{ product.id }}" data-max-quantity="{{ maxQuantity }}">
-
-					</div>
-					<div class="mb-3">
-						<a class="btn btn-dark flex-shrink-0" type="button" href="{{ path('app_cart_add', {'id': product.id}) }}">
-							<i class="bi-cart-fill me-1"></i>
-							{{'ajouter au panier' |trans }}
-						</a>
-					</div>
 					<p class="lead">{{ product.description }}</p>
+					<div class="d-flex flex-column">
+						<form action="{{ path('app_cart_add', {'id': products.id}) }}" method="post">
+							<div class="d-flex align-items-center">
+								<select class="form-select flex-grow-1 me-2" name="size" id="size">
+									{% for stock in stocks %}
+										<option value="{{ stock.size }}">{{ stock.size }}</option>
+									{% endfor %}
+								</select>
+								<button class="btn btn-outline-dark flex-shrink-0" type="submit">
+									<i class="bi-cart-fill me-1"></i>
+									Ajouter au panier
+								</button>
+							</div>
+						</form>
+					</div>
 				</div>
 
 			</div>
@@ -103,6 +107,14 @@ this.value = maxQuantity; // Remettre la quantité maximale autorisée
 }
 });
 });
+});
+	</script>
+<script>
+		document.addEventListener('DOMContentLoaded', function () {
+const select = document.getElementById('size');
+if (select.options.length === 1 && select.options[0].value === '') {
+select.style.display = 'none';
+}
 });
 	</script>
 {% endblock %}
