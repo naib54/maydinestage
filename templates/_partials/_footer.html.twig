@@ -1,61 +1,61 @@
 <footer>
-
-
 	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-lg-3 col-sm-6 mb-4 mx-auto">
-				<div class="single-box">
-					<h2>{{'à propos' |trans }}</h2>
+		<div
+			class="row justify-content-center">
+			<!-- Logo -->
+			<div class="col-lg-3 col-md-3 col-sm-8 mb-4 text-md-start text-center">
+				<a href="{{ path('app_home') }}">
+					<img src="{{asset('assets/logo/VF.png')}}" alt="votre logo" style="max-width: 250px;">
+				</a>
+			</div>
+			<!-- À propos -->
+			<div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+				<div class="single-box" style="padding: 20px;">
+					<h2 style="margin-bottom: 10px; font-size: 18px;">{{'à propos' |trans }}</h2>
+					<p style="margin-bottom: 10px; font-size: 14px; overflow-wrap: break-word;">{{'texte à propos' |trans }}</p>
 
-					<p>{{'texte à propos' |trans }}</p>
-					<h3>{{'nous acceptons' |trans }}</h3>
+
+				</div>
+			</div>
+
+
+			<!-- Infos pratiques -->
+			<div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+				<div class="single-box" style="padding: 20px;">
+					<h2 style="margin-bottom: 10px; font-size: 18px;">{{'infos pratiques' |trans }}</h2>
+					<a href="{{ path('app_cookies') }}" style="margin-bottom: 5px; font-size: 14px;">{{'politique cookie' |trans }}</a>
+					<p style="margin-bottom: 5px; font-size: 14px;">{{'politique confidentialité' |trans }}</p>
+					<a href="{{ path('app_mentions') }}" style="margin-bottom: 5px; font-size: 14px;">{{'mentions légales' |trans }}</a>
+					<p style="margin-bottom: 5px; font-size: 14px;">{{'cgv' |trans }}</p>
+					<a href="" class="font-apple-chancery" style="font-size: 14px;">{{'contact' |trans }}</a>
+				</div>
+			</div>
+
+			<!-- Suivez nous sur -->
+			<div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+				<div class="single-box" style="padding: 20px;">
+					<h2 style="margin-bottom: 10px; font-size: 18px;">{{'suivez nous sur' |trans }}</h2>
+					<p class="socials">
+						<a style="color: #3b5998;" href="#!" role="button">
+							<i class="fab fa-facebook-f fa-lg"></i>
+						</a>
+						<a style="color: #55acee;" href="#!" role="button">
+							<i class="fab fa-twitter fa-lg"></i>
+						</a>
+						<a style="color: #dd4b39;" href="https://fr.linkedin.com/in/joffrine" role="button">
+							<i class="fab fa-linkedin fa-lg"></i>
+						</a>
+						<a style="color: #ac2bac;" href="https://www.instagram.com/starloufa/" role="button">
+							<i class="fab fa-instagram fa-lg"></i>
+						</a>
+
+					</p>
+					<h3 style="margin-bottom: 10px; font-size: 16px;">{{'nous acceptons' |trans }}</h3>
 					<div class="card-area">
 						<i class="fab fa-cc-visa"></i>
 						<i class="fab fa-cc-mastercard"></i>
 						<i class="fab fa-cc-paypal"></i>
 					</div>
-				</div>
-			</div>
-
-
-			<div class="col-lg-3 col-sm-6 mb-4 mx-auto">
-				<div class="single-box">
-					<h2>{{'infos pratiques' |trans }}</h2>
-					<a href="{{ path('app_cookies') }}">{{'politique cookie' |trans }}</a>
-					<p>{{'politique confidentialité' |trans }}</p>
-					<a href="{{ path('app_mentions') }}">{{'mentions légales' |trans }}</a>
-					<p>{{'cgv' |trans }}</p>
-					<a class="nav-link active" href="" class="font-apple-chancery">{{'contact' |trans }}</a>
-
-				</div>
-			</div>
-
-
-			<div class="col-lg-3 col-sm-6 mb-4 mx-auto">
-				<div class="single-box">
-					<h2>{{'suivez nous sur' |trans }}</h2>
-
-					<p class="socials">
-						<a style="color: #3b5998;" href="#!" role="button">
-							<i class="fab fa-facebook-f fa-lg"></i>
-						</a>
-
-
-						<a style="color: #55acee;" href="#!" role="button">
-							<i class="fab fa-twitter fa-lg"></i>
-						</a>
-
-						<!-- Google -->
-						<a style="color: #dd4b39;" href="https://fr.linkedin.com/in/joffrine" role="button">
-							<i class="fab fa-linkedin fa-lg"></i>
-						</a>
-
-						<!-- Instagram -->
-						<a style="color: #ac2bac;" href="https://www.instagram.com/starloufa/" role="button">
-							<i class="fab fa-instagram fa-lg"></i>
-						</a>
-					</p>
-
 				</div>
 			</div>
 		</div>

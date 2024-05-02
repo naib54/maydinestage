@@ -90,26 +90,26 @@ class CartController extends AbstractController
     {
         $stock = $entityManager->getRepository(Stock::class)->findOneBy(['product' => $product]);
 
-    if (!$stock || $stock->getQuantity() <= 0) {
-        $this->addFlash('OutOfTheStock', "Désolé, votre produit n'as pas pu être ajouter au panier car ce produit n'est plus en stock");
-        return $this->redirectToRoute('app_product');
-    }
+        if (!$stock || $stock->getQuantity() <= 0) {
+            $this->addFlash('OutOfTheStock', "Désolé, votre produit n'a pas pu être ajouté au panier car ce produit n'est plus en stock");
+            return $this->redirectToRoute('app_product');
+        }
 
-    $id = $product->getId();
-    $cart = $session->get('cart', []);
+        $id = $product->getId();
+        $cart = $session->get('cart', []);
 
-    if (empty($cart[$id])) {
-        $cart[$id] = 1;
-    } else {
-        $cart[$id]++;
-    }
+        if (empty($cart[$id])) {
+            $cart[$id] = 1;
+        } else {
+            $cart[$id]++;
+        }
 
-    $stock->setQuantity($stock->getQuantity() - 1);
-    $entityManager->flush();
+        $stock->setQuantity($stock->getQuantity() - 1);
+        $entityManager->flush();
 
-    $session->set('cart', $cart);
+        $session->set('cart', $cart);
 
-    return $this->redirectToRoute('app_cart_index');
+        return $this->redirectToRoute('app_cart_index');
     }
 
     // #[Route('/remove/{id}', name: 'remove')]
@@ -137,29 +137,29 @@ class CartController extends AbstractController
     {
         $id = $product->getId();
 
-    $cart = $session->get('cart', []);
+        $cart = $session->get('cart', []);
 
-    if (!empty($cart[$id])) {
-        $quantityToRemove = 1; // Assuming you're removing one product at a time
+        if (!empty($cart[$id])) {
+            $quantityToRemove = 1; // Assuming you're removing one product at a time
 
-        if ($quantityToRemove > $cart[$id]) {
-            // This should never happen, but just in case
-            $quantityToRemove = $cart[$id];
+            if ($quantityToRemove > $cart[$id]) {
+                // This should never happen, but just in case
+                $quantityToRemove = $cart[$id];
+            }
+
+            $cart[$id] -= $quantityToRemove;
+
+            // Update stock quantity
+            $stock = $entityManager->getRepository(Stock::class)->findOneBy(['product' => $product]);
+            if ($stock) {
+                $stock->setQuantity($stock->getQuantity() + $quantityToRemove);
+                $entityManager->flush();
+            }
         }
 
-        $cart[$id] -= $quantityToRemove;
+        $session->set('cart', $cart);
 
-        // Update stock quantity
-        $stock = $entityManager->getRepository(Stock::class)->findOneBy(['product' => $product]);
-        if ($stock) {
-            $stock->setQuantity($stock->getQuantity() + $quantityToRemove);
-            $entityManager->flush();
-        }
-    }
-
-    $session->set('cart', $cart);
-
-    return $this->redirectToRoute('app_cart_index');
+        return $this->redirectToRoute('app_cart_index');
     }
 
     // #[Route('/delete/{id}', name: 'delete')]
@@ -225,6 +225,7 @@ class CartController extends AbstractController
 
         return $this->redirectToRoute('app_cart_index');
     }
+}
 
     // #[Route('/empty', name: 'empty')]
     // public function empty(SessionInterface $session)
@@ -233,4 +234,3 @@ class CartController extends AbstractController
 
     //     return $this->redirectToRoute('app_cart_index');
     // }
-}

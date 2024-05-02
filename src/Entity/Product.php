@@ -54,10 +54,24 @@ class Product
     #[ORM\OneToMany(targetEntity: OrderDetail::class, mappedBy: 'products')]
     private Collection $orderDetails;
 
+    /**
+     * @var Collection<int, Size>
+     */
+    #[ORM\ManyToMany(targetEntity: Size::class, mappedBy: 'products')]
+    private Collection $sizes;
+
+    /**
+     * @var Collection<int, Color>
+     */
+    #[ORM\ManyToMany(targetEntity: Color::class, inversedBy: 'products')]
+    private Collection $color;
+
     public function __construct()
     {
         $this->stocks = new ArrayCollection();
         $this->orderDetails = new ArrayCollection();
+        $this->sizes = new ArrayCollection();
+        $this->color = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -217,6 +231,57 @@ class Product
                 $orderDetail->setProducts(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Size>
+     */
+    public function getSizes(): Collection
+    {
+        return $this->sizes;
+    }
+
+    public function addSize(Size $size): static
+    {
+        if (!$this->sizes->contains($size)) {
+            $this->sizes->add($size);
+            $size->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSize(Size $size): static
+    {
+        if ($this->sizes->removeElement($size)) {
+            $size->removeProduct($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Color>
+     */
+    public function getColor(): Collection
+    {
+        return $this->color;
+    }
+
+    public function addColor(Color $color): static
+    {
+        if (!$this->color->contains($color)) {
+            $this->color->add($color);
+        }
+
+        return $this;
+    }
+
+    public function removeColor(Color $color): static
+    {
+        $this->color->removeElement($color);
 
         return $this;
     }

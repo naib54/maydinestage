@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Produits
+{% block title %}
+	{{'produits' |trans }}
 {% endblock %}
 
 {% block body %}
@@ -19,25 +20,25 @@
 
 	<div class="example-wrapper">
 		<h1>
-			Nos produits ! ✅</h1>
- <ul>
-        {% for product in products %}
-            <p>{{ product.name }}</p>
-			
-			<p>{{ product.description }}</p>
-			{% if product.category is not null %}
-                        <p>Catégorie : {{ product.category.name }}</p>
-            {% endif %}</p>
+			{{'nos produits' |trans }}</h1>
+		<ul>
+			{% for product in products %}
+				<p>{{ product.name }}</p>
+
+				<p>{{ product.description }}</p>
+				{% if product.category is not null %}
+					<p>{{'catégorie' |trans }}{{ product.category.name }}</p>
+				{% endif %}
+			</p>
 			{% if product.image is not null %}
-                        <img src="{{ asset('assets/uploads/Bijoux/' ~ product.image) }}" alt="{{ product.name }} "class="img-fluid card-img-top"/>
-                    {% endif %}
-		
-			<p>Prix {{ product.price }} €</p>
-        {% endfor %}
-    </ul>
+				<img src="{{ asset('assets/uploads/Bijoux/' ~ product.image) }}" alt="{{ product.name }} " class="img-fluid card-img-top"/>
+			{% endif %}
+
+			<p>{{'prix' |trans }}
+				{{ product.price }}
+				€</p>
+		{% endfor %}
+	</ul>
 
 
-
-
-	</div>
-{% endblock %}
+</div>{% endblock %}

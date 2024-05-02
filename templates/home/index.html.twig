@@ -8,245 +8,103 @@
 {% block body %}
 
 
-<img class="bg-img" src={{ asset('/assets/uploads/bijoux/bijoux3.jpeg') }} alt="bg image">
+	<img class="bg-img" src={{ asset('/assets/uploads/bijoux/bijoux3.jpeg') }} alt="bg image">
 </img>
 
 
 <section class="py-4 hidden" id="accueil">
 	<h1 id="MonH1" class="mb-4">May dine France</h1>
 	<h1 id="arabic" class="mb-4">{{ 'bienvenue'|trans }}</h1>
-	</h1>
-	<div id="divider">
-		<div class="display-4">
+</h1>
+<div id="divider">
+	<div class="display-4">
 
-			<a id="decouvrir" type="button" class="btn rounded-pill mt-1" href="{{ path('app_product')}}">
-				{{ 'découvrir nos produits'|trans }}
-			</a>
+		<a id="decouvrir" type="button" class="btn rounded-pill mt-1" href="{{ path('app_product')}}">
+			{{ 'découvrir nos produits'|trans }}
+		</a>
 
-		</div>
 	</div>
-</section>
-
-
-<section class="hidden" style="margin-top: 100vh;">
-	<div class="container">
-		<div class="row justify-content-center align-items-center">
-			<div class="col-md-12">
-				<div class="fade-in">
+</div></section><section class="hidden" style="margin-top: 100vh;">
+<div class="container">
+	<div class="row justify-content-center align-items-center">
+		<div class="col-md-12">
+			<div class="fade-in" style="display: flex; align-items: center;">
+				<div style="flex-grow: 1; max-width: 70%;">
 					<h1>{{ 'qui somme nous ?'|trans }}</h1>
-					<p class="hidden">
-						{{ 'May Dine France est une marque'|trans }}</p>
-						 																																																																																																																																																																																																																																																																																																																														<p>{{ 'venue en 2013'|trans }}</p>
-																																																																																																																																																																																																																																																																																																																																																																																							<p>{{ '10 ans plus tard'|trans }}<p/>
-				
-
-
+					<p class="hidden">{{ 'May Dine France est une marque'|trans }}</p>
+					<p>{{ 'venue en 2013'|trans }}</p>
+					<p>{{ '10 ans plus tard'|trans }}</p>
 					<p class="hidden">{{ 'Notre but est de promouvoir'|trans }}</p>
-																																																																																																																																																																																																																																																																																																																																																																																																																													<p>{{ 'Nous vous proposons des produits alimentaires'|trans }}</p>
-																																																																																																																																																																																																																																																																																																																																																																																																																													<p>{{ 'Nous vous proposons des produits que nous produisons'|trans }}</p>
-																																																																																																																																																																																																																																																																																																																																																																																																																													 <p>{{'ou encore nous mettons'|trans }}</p>
+					<p>{{ 'Nous vous proposons des produits alimentaires'|trans }}</p>
+					<p>{{ 'Nous vous proposons des produits que nous produisons'|trans }}</p>
+					<p>{{'ou encore nous mettons'|trans }}</p>
 					<h6 class="hidden">{{'Notre slogan'|trans }}</h6>
 				</div>
+				<a href="https://pochonvert.fr/">
+					<img class="hidden" src="{{asset('assets/logo/pochonvert.png')}}" alt="description_de_votre_image" style="max-width: 300px;">
+				</a>
+			</div>
+
+
+		</div>
+	</div>
+
+</div></section><section class="hidden">
+
+
+<div id="divider">
+	<h1 id="galerietitre" class="display-4">{{ 'galerie'|trans }}</h1>
+</div>
+<div class="container-fluid hidden">
+	<div
+		class="px-lg-5 hidden">
+		{# Galerie #}
+		<div class="row py-5" id="nosproduits">
+			<div class="col-lg-12 mx-auto">
+				<div class="text-white p-5 shadow-sm rounded banner">
+					<h1 class="display-4">{{ 'nos produits sont'|trans }}</h1>
+					<p class="lead">
+						<span id="bleu">{{ 'haut de gamme,'|trans }}</span>
+						<span class="blanc">{{ 'qualitatif '|trans }}</span>,
+						<span id="rouge">{{ 'et français'|trans }}!</span>
+					</p>
+
+				</div>
 			</div>
 		</div>
 
-	</div>
-</section>
 
-<section class="hidden">
-
-
-	<div id="divider">
-		<h1 id="galerietitre" class="display-4">{{ 'galerie'|trans }}</h1>
-	</div>
-	<div class="container-fluid hidden">
 		<div
-			class="px-lg-5 hidden">
-			{# Galerie #}
-			<div class="row py-5" id="nosproduits">
-				<div class="col-lg-12 mx-auto">
-					<div class="text-white p-5 shadow-sm rounded banner">
-						<h1 class="display-4">{{ 'nos produits sont'|trans }}</h1>
-						<p class="lead">
-							<span id="bleu">{{ 'haut de gamme,'|trans }}</span>
-							<span class="blanc">{{ 'qualitatif '|trans }}</span>,
-							<span id="rouge">{{ 'et français'|trans }}!</span>
-						</p>
-
-					</div>
-				</div>
-			</div>
-
-
-			<div
-				class="row hidden">
-				<!-- Gallery item -->
-				<div class="col-xl-3 col-lg-4 col-md-6 mb-4">
-					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Bijoux/bijoux18.jpeg')}}" alt="" class="img-fluid card-img-top">
+			class="row hidden">
+			<!-- Gallery item -->
+			{% for product in products %}
+				<div
+					class="col-xl-3 col-lg-4 col-md-6 mb-4">
+					<!--  code HTML pour chaque produit  avec une boucle -->
+					<div class="bg-white rounded shadow-sm">
+						<img src="{{ asset(product.image) }}" alt="" class="img-fluid card-img-top">
 						<div class="p-4">
 							<h5>
-								<a href="#" class="text-dark">Collier 1</a>
+								<a href="#" class="text-dark">{{ product.name }}</a>
 							</h5>
-							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
-								<p class="small mb-0">
-									<i class="fa fa-picture-o mr-2"></i>
-									
-									<span class="font-weight-bold">35 €</span>
-								</p>
-								<button class="badge badge-primary px-3 rounded-pill  ">{{ 'acheter'|trans }}</button>
-							</div>
+							<p class="small text-muted mb-0">{{ 'prix'|trans }}
+								{{ product.price }}
+								€</p>
+							<p class="small text-muted mb-0">{{ 'poids'|trans }}</p>
+
+							<a href="{{ path('app_product_details', {'id': product.id}) }}" class="btn btn-primary">{{ 'en voir plus'|trans }}</a>
+
+							<a class="btn btn-dark flex-shrink-0 ml-7" type=" button" href=" {{ path('app_cart_add', {'id': product.id} ) }}">{{'acheter' |trans }}</a>
+
 						</div>
 					</div>
 				</div>
-				<!-- End -->
-
-				<!-- Gallery item -->
-				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
-					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Bijoux/bijoux3.jpeg')}}" alt="" class="img-fluid card-img-top">
-						<div class="p-4">
-							<h5>
-								<a href="#" class="text-dark">Blorange</a>
-							</h5>
-							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
-								<p class="small mb-0">
-									<i class="fa fa-picture-o mr-2"></i>
-									<span class="font-weight-bold">PNG €</span>
-								</p>
-								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">{{ 'acheter'|trans }}</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End -->
-
-				<!-- Gallery item -->
-				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
-					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Bijoux/bijoux8.jpeg')}}" alt="" class="img-fluid card-img-top">
-						<div class="p-4">
-							<h5>
-								<a href="#" class="text-dark">And She Realized</a>
-							</h5>
-							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
-								<p class="small mb-0">
-									<i class="fa fa-picture-o mr-2"></i>
-									<span class="font-weight-bold black">30 €</span>
-								</p>
-								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">{{ 'acheter'|trans }}</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End -->
-
-				<!-- Gallery item -->
-				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
-					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Bijoux/bijoux13.jpeg')}}" alt="" class="img-fluid card-img-top">
-						<div class="p-4">
-							<h5>
-								<a href="#" class="text-dark">DOSE Juice</a>
-							</h5>
-							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
-								<p class="small mb-0">
-									<i class="fa fa-picture-o mr-2"></i>
-									<span class="font-weight-bold">40 €</span>
-								</p>
-								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">{{ 'acheter'|trans }}</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End -->
-
-				<!-- Gallery item -->
-				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
-					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Friandises/8.jpeg')}}" alt="" class="img-fluid card-img-top">
-						<div class="p-4">
-							<h5>
-								<a href="#" class="text-dark">Pineapple</a>
-							</h5>
-							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
-								<p class="small mb-0">
-									<i class="fa fa-picture-o mr-2"></i>
-									<span class="font-weight-bold">PNG €</span>
-								</p>
-								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">{{ 'acheter'|trans }}</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End -->
-
-				<!-- Gallery item -->
-				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
-					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Friandises/1.jpeg')}}" alt="" class="img-fluid card-img-top">
-						<div class="p-4">
-							<h5>
-								<a href="#" class="text-dark">Yellow banana</a>
-							</h5>
-							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
-								<p class="small mb-0">
-									<i class="fa fa-picture-o mr-2"></i>
-									<span class="font-weight-bold">JPG €</span>
-								</p>
-								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">{{ 'acheter'|trans }}</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End -->
-
-				<!-- Gallery item -->
-				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
-					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Friandises/4.jpeg')}}" alt="" class="img-fluid card-img-top">
-						<div class="p-4">
-							<h5>
-								<a href="#" class="text-dark">Teal Gameboy</a>
-							</h5>
-							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
-								<p class="small mb-0">
-									<i class="fa fa-picture-o mr-2"></i>
-									<span class="font-weight-bold">JPEG €</span>
-								</p>
-								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">{{ 'acheter'|trans }}</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End -->
-
-				<!-- Gallery item -->
-				<div class="col-xl-3 col-lg-4 col-md-6 mb-4 hidden">
-					<div class="bg-white rounded shadow-sm"><img src="{{asset('/assets/uploads/Friandises/21.jpeg')}}" alt="" class="img-fluid card-img-top">
-						<div class="p-4">
-							<h5>
-								<a href="#" class="text-dark">Color in Guatemala.</a>
-							</h5>
-							<p class="small text-muted mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-							<div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
-								<p class="small mb-0">
-									<i class="fa fa-picture-o mr-2"></i>
-									<span class="font-weight-bold">PNG €</span>
-								</p>
-								<button class="badge badge-primary px-3 rounded-pill font-weight-normal ">{{ 'acheter'|trans }}</button>
-							</div>
-						</div>
-					</div>
-				</div>
+			{% endfor %}
 
 
-				<!-- End -->
-
-			</div>
-			<div class="py-5 text-right hidden">
-				<a href="{{ path('app_product')}}" class="btn btn-dark px-5 py-3 text-uppercase">{{ 'en voir plus'|trans }}</a>
-			</div>
+		</div>
+		<div class="py-5 text-right hidden">
+			<a href="{{ path('app_product')}}" class="btn btn-dark px-5 py-3 text-uppercase">{{ 'en voir plus'|trans }}</a>
 		</div>
 	</div>
-</section>{% endblock %}
+</div></section>{% endblock %}

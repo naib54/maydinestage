@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Inscription
+	{{'inscription' |trans }}
 {% endblock %}
 
 {% block body %}
 	<div class="container">
-		<h1 class="mb-4">Inscription</h1>
+		<h1 class="mb-4">{{'inscription' |trans }}</h1>
 
 		{% if form_errors(registrationForm) %}
 			<div class="alert alert-danger" role="alert">
@@ -30,7 +30,7 @@
 				{{ form_label(registrationForm.agreeTerms, null, {'label_attr': {'class': 'form-check-label'}}) }}
 			</div>
 
-			<button type="submit" class="btn btn-primary">S'inscrire</button>
+			<button type="submit" class="btn btn-primary">{{'sinscrire' |trans }}</button>
 
 			{{ form_end(registrationForm) }}
 		</form>

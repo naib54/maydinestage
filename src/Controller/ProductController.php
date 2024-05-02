@@ -26,8 +26,10 @@ class ProductController extends AbstractController
 
         // Récupérer tous les produits sans pagination
         $productsQuery = $entityManager->getRepository(Product::class)->findAll();
-
         
+        $locale = $request->getLocale();
+
+  
 
         // Paginer les résultats de la requête des produits
         $paginator = $paginatorInterface->paginate(
@@ -92,9 +94,17 @@ class ProductController extends AbstractController
         $products = $entityManager->getRepository(Product::class)->find($id);
         $stocks = $entityManager->getRepository(Stock::class)->findBy(['product' => $products]);
 
+        $maxQuantity = 0;
+        foreach ($stocks as $stock) {
+            if ($stock->getQuantity() > $maxQuantity) {
+                $maxQuantity = $stock->getQuantity();
+            }
+        }
+
         return $this->render('product/details.html.twig', [
-            'products' => $products,
-            'stocks' => $stocks
+            'product' => $products,
+            'stocks' => $stocks,
+            'maxQuantity' => $maxQuantity // Passer la quantité maximale disponible au template Twig
         ]);
     }
 }

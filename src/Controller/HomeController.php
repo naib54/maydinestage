@@ -19,7 +19,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-        $products = $entityManager->getRepository(Product::class)->findall();
+        $products = $entityManager->getRepository(Product::class)->findby([],[], 8);
         $category = $entityManager->getRepository(Category::class)->findall();
 
 
@@ -34,7 +34,7 @@ class HomeController extends AbstractController
             'products' => $products, 'category' => $category,
         ]);
     }
+    
+}
         
     
-
-}

@@ -1,12 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-red">
+<nav class="navbar navbar-expand-lg navbar-light bg-red ">
 	<div
 		class="container-fluid d-flex justify-content-between">
 
 		<!-- gauche -->
 		<div class="navbar-nav ">
-			<a class="nav-link active" href="{{ path('app_home')}}">{{ 'accueil'|trans }}</a>
-			<a class="nav-link active" href="{{ path('app_product')}}">{{ 'produits'|trans }}</a>
-			<a class="nav-link active" href="#">{{ 'service'|trans }}</a>
+			<a class="nav-link active" href="{{ path('app_home')}}">{{ 'accueil' |trans }}</a>
+			<a class="nav-link active" href="{{ path('app_product')}}">{{ 'produits' |trans }}</a>
+			<a class="nav-link active" href="#">{{ 'service' |trans }}</a>
 		</div>
 
 		<!-- Logo et Sélecteur de langue -->
@@ -14,28 +14,52 @@
 			<a class="navbar-brand" href="{{ path('app_home')}}">
 				<img src="{{ asset('assets/logo/VF.png') }}" alt="Logo" width="110" height="110" class="d-inline-block align-text-top">
 			</a>
+			<!-- Sélecteur de langue -->
+			<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+					Sélectionner la langue
+					<i class="fas fa-globe"></i>
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="languageDropdown">
+					<li>
+						<a class="dropdown-item" href="#" onclick="changeLanguage('fr')">
+							<i class="flag-icon flag-icon-fr"></i>
+							Français</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="#" onclick="changeLanguage('en')">
+							<i class="flag-icon flag-icon-gb"></i>
+							English</a>
+					</li>
+					<li>
+						<a class="dropdown-item" href="#" onclick="changeLanguage('ar')">
+							<i class="flag-icon flag-icon-sa"></i>
+							العربية</a>
+					</li>
+				</ul>
+				<form id="locale-form" class="d-none" action="{{ path('change_locale') }}" method="post">
+					<input type="hidden" name="locale" id="selectedLocale">
+				</form>
+			</div>
+
+
+			<!-- Liens à droite -->
+			<div class="navbar-nav">
+				<a class="nav-link active" href="{{ path('app_cart_index')}}" id="Panier" class="font-apple-chancery">{{ 'panier'|trans }}</a>
+				{% if app.user %}
+					<a href="{{ path('app_logout') }}" class="nav-link">{{ 'déconnexion'|trans }}</a>
+				{% else %}
+					<a class="nav-link" href="{{ path('app_login') }}">{{ 'connexion'|trans }}</a>
+				{% endif %}
+				<a class="nav-link" href="{{ path('app_register') }}">{{ 'inscription'|trans }}</a>
+			</div>
+
 		</div>
+	</nav>
 
-
-		<!-- Liens à droite -->
-		<div class="navbar-nav">
-			<a class="nav-link active" href="{{ path('app_cart_index')}}" id="Panier" class="font-apple-chancery">{{ 'panier'|trans }}</a>
-			{% if app.user %}
-				<a href="{{ path('app_logout') }}" class="nav-link">{{ 'déconnexion'|trans }}</a>
-			{% else %}
-				<a class="nav-link" href="{{ path('app_login') }}">{{ 'connexion'|trans }}</a>
-			{% endif %}
-			<a class="nav-link" href="{{ path('app_register') }}">{{ 'inscription'|trans }}</a>
-
-		</div>
-		<div>
-			<select class="form-select position-static">
-				<option value="fr">Français</option>
-				<option value="en">English</option>
-				<option value="ar">العربية</option>
-			</select>
-		</div>
-	</div>
-
-
-</nav>
+	<script>
+		function changeLanguage(locale) {
+document.getElementById('selectedLocale').value = locale;
+document.getElementById('locale-form').submit();
+}
+	</script>

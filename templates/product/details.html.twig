@@ -1,42 +1,108 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Détails du Produit
+{% block title %}
+	{{'détails du produits' |trans }}
 {% endblock %}
 
 {% block body %}
+
+
 	<section class="py-5">
 		<div class="container px-4 px-lg-5 my-5">
 			<div class="row gx-4 gx-lg-5 align-items-center">
-				<div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{ products.image }}" alt="{{ products.name }}" width="500" height="600"/></div>
 				<div class="col-md-6">
-					{% if products.promotion != null %}
-						<div class="small mb-1">-{{ products.discount| number_format(0, '.', '') }}%</div>
+					<img class="card-img-top mb-5 mb-md-0" src="{{ asset(product.image) }}" alt="{{ product.name }}"/>
+				</div>
+				<div class="col-md-6">
+					{% if product.promotion %}
+						<div class="badge bg-danger mb-3">-{{ product.discount| number_format(0, '.', '') }}%</div>
 					{% endif %}
-					<h1 class="display-5 fw-bolder">{{ products.name }}</h1>
-					<div class="fs-5 mb-5">
-						{% if products.promotion != null %}
-							{% set reducedPrice = products.price * (1 - products.discount / 100) %}
-							<span class="text-decoration-line-through">{{ products.price }}€</span>
+					<h1 class="display-5 fw-bolder">{{ product.name }}</h1>
+					<p class="lead">
+						{% if product.promotion %}
+							<span class="text-decoration-line-through">{{ product.price }}€</span>
 							<span>{{ reducedPrice|number_format(2, '.', '') }}€</span>
 						{% else %}
-							<span>{{ products.price }}€</span>
+							<span>{{ product.price }}€</span>
 						{% endif %}
+					</p>
+					<div class="mb-3">
+						<label for="size" class="form-label">{{'choisissez la taille' |trans }}</label>
+						<select class="form-select" id="size">
+							{% for stock in stocks %}
+								<option value="{{ stock.size }}">{{ stock.size }}</option>
+							{% endfor %}
+						</select>
+						<div class="mb-3">
+							<label for="color" class="form-label">{{'choisissez la couleur' |trans }}</label>
+							<select class="form-select" id="color">
+								{% for color in product.color %}
+									<option value="{{ color.id }}">{{ color.name }}</option>
+								{% endfor %}
+							</select>
+						</div>
 					</div>
-					<select name="size" id="size">
-						{% for stock in stocks %}
-							<option value="{{ stock.size }}">{{ stock.size }}</option>
-						{% endfor %}
-					</select>
-					<p class="lead">{{ products.description }}</p>
-					<div class="d-flex">
-						<input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem"/>
-						<a class="btn btn-outline-dark flex-shrink-0" type="button" href="{{ path('app_cart_add', {'id': products.id}) }}">
+					<div class="mb-3">
+						<label for="quantity" class="form-label">{{'quantité' |trans }}</label>
+						<input class="form-control quantity-input" id="inputQuantity" type="number" value="1" min="1" style="max-width: 3rem" data-product-id="{{ product.id }}" data-max-quantity="{{ maxQuantity }}">
+
+					</div>
+					<div class="mb-3">
+						<a class="btn btn-dark flex-shrink-0" type="button" href="{{ path('app_cart_add', {'id': product.id}) }}">
 							<i class="bi-cart-fill me-1"></i>
-							Ajouter au panier
+							{{'ajouter au panier' |trans }}
 						</a>
 					</div>
+					<p class="lead">{{ product.description }}</p>
 				</div>
+
 			</div>
 		</div>
 	</section>
+
+	<script>
+		// Fonction pour mettre à jour la quantité en fonction de la taille sélectionnée
+function updateQuantity() { // Récupérer la taille sélectionnée
+var selectedSize = document.getElementById('size').value;
+// Parcourir les stocks pour trouver la quantité correspondante à la taille sélectionnée
+var quantity;{% for stock in stocks %}if ("{{ stock.size }}" === selectedSize) {
+quantity = "{{ stock.quantity }}";
+}
+{% endfor %}
+// Mettre à jour la quantité affichée
+document.getElementById('quantity').textContent = quantity;
+}
+
+// Écouteur d'événements pour le changement de taille
+document.getElementById('size').addEventListener('change', updateQuantity);
+
+// Appel initial pour mettre à jour la quantité lors du chargement de la page
+updateQuantity();
+
+// Ajouter au panier
+document.getElementById('addToCartBtn').addEventListener('click', function () {
+var selectedSize = document.getElementById('size').value;
+var quantity = document.getElementById('inputQuantity').value;
+// Effectuer ici l'action d'ajout au panier avec la taille sélectionnée et la quantité
+// window.location.href = "{{ path('app_cart_add', {'id': product.id}) }}" + "?size=" + selectedSize + "&quantity=" + quantity;
+alert('Produit ajouté au panier : Taille ' + selectedSize + ', Quantité ' + quantity);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+const quantityInputs = document.querySelectorAll('.quantity-input');
+
+quantityInputs.forEach(function (input) {
+input.addEventListener('change', function () {
+const productId = this.dataset.productId;
+const maxQuantity = this.dataset.maxQuantity;
+const currentQuantity = parseInt(this.value);
+
+if (currentQuantity > maxQuantity) {
+alert('Vous avez atteint la limite du stock pour ce produit.');
+this.value = maxQuantity; // Remettre la quantité maximale autorisée
+}
+});
+});
+});
+	</script>
 {% endblock %}
